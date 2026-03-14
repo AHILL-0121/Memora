@@ -19,6 +19,20 @@ function loadScript(src) {
   });
 }
 
+async function loadScriptWithFallback(sources) {
+  let lastError;
+  for (const src of sources) {
+    try {
+      await loadScript(src);
+      return;
+    } catch (error) {
+      lastError = error;
+    }
+  }
+
+  throw lastError || new Error('Failed to load required runtime scripts.');
+}
+
 export default function MindarViewer({ targetUrl, mediaUrl, mediaType }) {
   const containerRef = useRef(null);
   const [runtimeError, setRuntimeError] = useState('');
@@ -31,8 +45,14 @@ export default function MindarViewer({ targetUrl, mediaUrl, mediaType }) {
 
     async function startMindar() {
       try {
-        await loadScript('https://cdn.jsdelivr.net/npm/three@0.168.0/build/three.min.js');
-        await loadScript('https://cdn.jsdelivr.net/npm/mind-ar@1.2.5/dist/mindar-image-three.prod.js');
+        await loadScriptWithFallback([
+          'https://cdn.jsdelivr.net/npm/three@0.168.0/build/three.min.js',
+          'https://unpkg.com/three@0.168.0/build/three.min.js'
+        ]);
+        await loadScriptWithFallback([
+          'https://cdn.jsdelivr.net/npm/mind-ar@1.2.5/dist/mindar-image-three.prod.js',
+          'https://unpkg.com/mind-ar@1.2.5/dist/mindar-image-three.prod.js'
+        ]);
 
         const THREE = window.THREE;
         const MindARThree = window.MINDAR?.IMAGE?.MindARThree;
@@ -86,7 +106,11 @@ export default function MindarViewer({ targetUrl, mediaUrl, mediaType }) {
         });
       } catch (error) {
         if (mounted) {
-          setRuntimeError(error instanceof Error ? error.message : 'Failed to start MindAR runtime.');
+          setRuntimeError(
+            error instanceof Error
+              ? `${error.message}. Check ad-block/privacy shields or corporate network rules for CDN script access.`
+              : 'Failed to start MindAR runtime. Check ad-block/privacy shields or corporate network rules for CDN script access.'
+          );
         }
       }
     }
