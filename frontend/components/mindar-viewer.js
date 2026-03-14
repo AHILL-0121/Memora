@@ -45,11 +45,13 @@ export default function MindarViewer({ targetUrl, mediaUrl, mediaType }) {
 
     async function startMindar() {
       try {
+        const bundledThree = await import('three');
+        if (!window.THREE) {
+          window.THREE = bundledThree;
+        }
+
         await loadScriptWithFallback([
-          'https://cdn.jsdelivr.net/npm/three@0.168.0/build/three.min.js',
-          'https://unpkg.com/three@0.168.0/build/three.min.js'
-        ]);
-        await loadScriptWithFallback([
+          '/vendor/mindar-image-three.prod.js',
           'https://cdn.jsdelivr.net/npm/mind-ar@1.2.5/dist/mindar-image-three.prod.js',
           'https://unpkg.com/mind-ar@1.2.5/dist/mindar-image-three.prod.js'
         ]);
