@@ -17,6 +17,7 @@ class Settings(BaseSettings):
 
     backend_base_url: str = 'http://localhost:8000'
     public_base_url: str = 'http://localhost:3000'
+    cors_origins: str = 'http://localhost:3000,http://127.0.0.1:3000,https://sa-memora.vercel.app'
 
     database_url: str = f"sqlite:///{(BASE_DIR / 'data' / 'memora.db').as_posix()}"
     private_signed_url_minutes: int = 30

@@ -43,4 +43,9 @@ Python version pin (important):
 - Preferred: set Render env var `PYTHON_VERSION = 3.12`
 - Also included in repo root: `.python-version`
 
+Required frontend CORS setting:
+
+- Set `CORS_ORIGINS` as a comma-separated list, for example:
+	- `http://localhost:3000,https://sa-memora.vercel.app`
+
 This repository pins Python for Render via `.python-version` and `PYTHON_VERSION` to avoid `pydantic-core` source builds on unsupported runtimes.
