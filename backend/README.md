@@ -38,4 +38,9 @@ Use these settings for a Python Web Service:
 - Build Command: `pip install -r requirements.txt`
 - Start Command: `uvicorn app.main:app --host 0.0.0.0 --port $PORT`
 
-This backend pins Python via `runtime.txt` to avoid `pydantic-core` source builds on unsupported runtimes.
+Python version pin (important):
+
+- Preferred: set Render env var `PYTHON_VERSION = 3.12`
+- Also included in repo root: `.python-version`
+
+This repository pins Python for Render via `.python-version` and `PYTHON_VERSION` to avoid `pydantic-core` source builds on unsupported runtimes.
