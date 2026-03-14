@@ -6,15 +6,46 @@ function loadScript(src) {
   return new Promise((resolve, reject) => {
     const existing = document.querySelector(`script[src="${src}"]`);
     if (existing) {
-      resolve();
-      return;
+      const status = existing.getAttribute('data-load-status');
+      if (status === 'loaded') {
+        resolve();
+        return;
+      }
+      if (status === 'failed') {
+        existing.remove();
+      } else {
+        const onLoad = () => {
+          existing.setAttribute('data-load-status', 'loaded');
+          existing.removeEventListener('load', onLoad);
+          existing.removeEventListener('error', onError);
+          resolve();
+        };
+        const onError = () => {
+          existing.setAttribute('data-load-status', 'failed');
+          existing.removeEventListener('load', onLoad);
+          existing.removeEventListener('error', onError);
+          reject(new Error(`Failed to load script: ${src}`));
+        };
+
+        existing.addEventListener('load', onLoad);
+        existing.addEventListener('error', onError);
+        return;
+      }
     }
 
     const script = document.createElement('script');
     script.src = src;
     script.async = true;
-    script.onload = () => resolve();
-    script.onerror = () => reject(new Error(`Failed to load script: ${src}`));
+    script.setAttribute('data-load-status', 'loading');
+    script.onload = () => {
+      script.setAttribute('data-load-status', 'loaded');
+      resolve();
+    };
+    script.onerror = () => {
+      script.setAttribute('data-load-status', 'failed');
+      script.remove();
+      reject(new Error(`Failed to load script: ${src}`));
+    };
     document.body.appendChild(script);
   });
 }
