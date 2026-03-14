@@ -1,0 +1,31 @@
+.github/copilot-instructions.md
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Env files
+**/.env
+**/.env.*
+!backend/.env.example
+!frontend/.env.local.example
+
+# Python
+**/__pycache__/
+**/*.py[cod]
+**/.pytest_cache/
+**/.mypy_cache/
+backend/.venv/
+
+# Node / Next.js
+frontend/node_modules/
+frontend/.next/
+frontend/.turbo/
+
+# Runtime/generated data
+backend/data/memora.db
+backend/data/qr/*.png
+backend/data/targets/*.mind
+!backend/data/targets/sample.mind

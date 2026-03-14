@@ -1,0 +1,78 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --primary: #e8734a;
+  --secondary: #f5c878;
+  --background: #fdfaf5;
+  --surface: #fff8ee;
+  --text-primary: #1a1208;
+  --text-muted: #8c7355;
+  --accent: #d44a2a;
+  --success: #4caf72;
+  --error: #e84a4a;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  background: var(--background);
+  color: var(--text-primary);
+  font-family: var(--font-body), sans-serif;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--font-display), serif;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.container {
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+.btn-primary {
+  @apply inline-flex items-center justify-center rounded-full px-6 py-3 text-sm font-medium text-white transition;
+  background: var(--text-primary);
+}
+
+.btn-primary:hover {
+  background: var(--accent);
+}
+
+.btn-secondary {
+  @apply inline-flex items-center justify-center rounded-full px-6 py-3 text-sm font-medium border transition;
+  border-color: #e8dccb;
+  color: var(--text-primary);
+  background: transparent;
+}
+
+.btn-secondary:hover {
+  background: var(--surface);
+}
+
+.badge {
+  @apply inline-flex items-center rounded-full px-3 py-1 text-xs;
+  color: var(--text-muted);
+  background: #f4ebdf;
+}
+
+.card {
+  @apply rounded-2xl border p-5;
+  border-color: #efdfca;
+  background: #fffdf9;
+}
