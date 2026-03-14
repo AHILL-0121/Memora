@@ -29,3 +29,13 @@ uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
 - Uses Clerk JWT verification through JWKS (`CLERK_ISSUER` or `CLERK_JWKS_URL`).
 - Uses Cloudinary signed uploads via `POST /v1/upload/sign`.
 - Cards can carry real uploaded `.mind` target URLs for MindAR runtime in frontend.
+
+## Render deployment
+
+Use these settings for a Python Web Service:
+
+- Root Directory: `backend`
+- Build Command: `pip install -r requirements.txt`
+- Start Command: `uvicorn app.main:app --host 0.0.0.0 --port $PORT`
+
+This backend pins Python via `runtime.txt` to avoid `pydantic-core` source builds on unsupported runtimes.
